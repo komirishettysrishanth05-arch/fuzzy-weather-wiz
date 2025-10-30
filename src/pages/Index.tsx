@@ -3,8 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { WeatherSlider } from "@/components/WeatherSlider";
 import { WeatherResult } from "@/components/WeatherResult";
+import { IntroSlide } from "@/components/IntroSlide";
+import { LocationSelector } from "@/components/LocationSelector";
 import { toast } from "sonner";
-import { Cloud, MapPin, Calendar } from "lucide-react";
+import { Cloud, Calendar } from "lucide-react";
+import weatherMap from "@/assets/weather-map.png";
 
 const Index = () => {
   const [temperature, setTemperature] = useState(25);
@@ -19,6 +22,8 @@ const Index = () => {
   } | null>(null);
   const [loading, setLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [location, setLocation] = useState("amaravati");
+  const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -33,6 +38,14 @@ const Index = () => {
       year: "numeric",
       month: "long",
       day: "numeric",
+    });
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     });
   };
 
@@ -111,29 +124,35 @@ const Index = () => {
     }
   };
 
+  if (showIntro) {
+    return <IntroSlide onComplete={() => setShowIntro(false)} />;
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-bg">
+    <div className="min-h-screen bg-gradient-bg relative overflow-hidden">
       {/* Header Section */}
-      <header className="bg-primary/10 backdrop-blur-sm border-b border-border/50 sticky top-0 z-10">
+      <header className="bg-primary/10 backdrop-blur-md border-b border-border/50 sticky top-0 z-10 animate-fade-in">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <MapPin className="text-primary w-5 h-5" />
-              <span className="font-semibold text-foreground">Amaravati, AP</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="text-primary w-5 h-5" />
-              <span className="text-sm text-muted-foreground">{formatDate(currentDate)}</span>
+            <LocationSelector value={location} onChange={setLocation} />
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="text-primary w-5 h-5" />
+                <span className="text-sm text-muted-foreground">{formatDate(currentDate)}</span>
+              </div>
+              <div className="text-sm font-mono text-primary">
+                {formatTime(currentDate)}
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 md:py-12">
+      <main className="container mx-auto px-4 py-8 md:py-12 animate-fade-in delay-200">
         <div className="max-w-6xl mx-auto">
           {/* Title Section */}
-          <div className="text-center mb-12 space-y-4">
+          <div className="text-center mb-12 space-y-4 animate-slide-in-bottom">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Cloud className="w-12 h-12 text-primary animate-float" />
               <h1 className="text-4xl md:text-5xl font-bold text-foreground">
@@ -145,9 +164,9 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8 animate-fade-in delay-300">
             {/* Input Section */}
-            <Card className="p-6 md:p-8 shadow-card">
+            <Card className="p-6 md:p-8 shadow-card hover:shadow-lg transition-all duration-300">
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <span className="text-primary">⚙️</span>
                 Input Parameters
@@ -276,9 +295,14 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="mt-12 py-6 bg-primary/5 border-t border-border/50">
-        <div className="container mx-auto px-4 text-center">
+      {/* Footer with Weather Map Background */}
+      <footer className="relative mt-12 py-8 overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-20 bg-cover bg-center"
+          style={{ backgroundImage: `url(${weatherMap})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        <div className="container mx-auto px-4 text-center relative z-10">
           <p className="text-sm text-muted-foreground">
             Powered by Fuzzy Logic Weather Prediction System
           </p>

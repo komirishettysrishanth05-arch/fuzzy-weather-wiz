@@ -3,7 +3,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { WeatherSlider } from "@/components/WeatherSlider";
 import { WeatherResult } from "@/components/WeatherResult";
-import { IntroSlide } from "@/components/IntroSlide";
 import { LocationSelector } from "@/components/LocationSelector";
 import { toast } from "sonner";
 import { Cloud, Calendar } from "lucide-react";
@@ -23,7 +22,6 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [location, setLocation] = useState("amaravati");
-  const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -123,10 +121,6 @@ const Index = () => {
       setLoading(false);
     }
   };
-
-  if (showIntro) {
-    return <IntroSlide onComplete={() => setShowIntro(false)} />;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-bg relative overflow-hidden">

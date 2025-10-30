@@ -261,45 +261,26 @@ const Index = () => {
               )}
             </div>
           </div>
-
-          {/* API Integration Guide */}
-          <Card className="mt-8 p-6 bg-accent/10 border-accent">
-            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-              <span>🔌</span>
-              FastAPI Backend Integration Guide
-            </h3>
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <p>
-                <strong>Step 1:</strong> Update the API_URL in the code (line 43) with your FastAPI endpoint
-              </p>
-              <p>
-                <strong>Step 2:</strong> Add your API key (line 44) if authentication is required
-              </p>
-              <p>
-                <strong>Step 3:</strong> Ensure your FastAPI endpoint returns JSON with: 
-                <code className="ml-2 bg-muted px-2 py-1 rounded">
-                  {`{ condition: "sunny", confidence: 85.5, score: 35.2 }`}
-                </code>
-              </p>
-              <p className="mt-3 text-primary font-semibold">
-                Currently using mock data for demonstration. Connect your backend to enable real predictions!
-              </p>
-            </div>
-          </Card>
         </div>
       </main>
 
-      {/* Footer with Weather Map Background */}
-      <footer className="relative mt-12 py-8 overflow-hidden">
+      {/* Weather Map Background Section */}
+      <footer className="relative h-96 overflow-hidden">
         <div 
-          className="absolute inset-0 opacity-20 bg-cover bg-center"
-          style={{ backgroundImage: `url(${weatherMap})` }}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${weatherMap})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <p className="text-sm text-muted-foreground">
-            Powered by Fuzzy Logic Weather Prediction System
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
+        <div className="container mx-auto px-4 h-full flex items-end pb-8 relative z-10">
+          <div className="w-full text-center">
+            <p className="text-sm text-foreground/80 font-medium backdrop-blur-sm bg-background/30 inline-block px-6 py-2 rounded-full">
+              Powered by Fuzzy Logic Weather Prediction System
+            </p>
+          </div>
         </div>
       </footer>
     </div>
